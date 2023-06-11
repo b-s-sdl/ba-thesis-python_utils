@@ -1,0 +1,27 @@
+#!/bin/bash 
+# Standard output and error:
+#SBATCH -o ../Log/tjob.out.%j
+#SBATCH -e ../Log/tjob.err.%j
+# Initial working directory:
+# Job Name:
+#SBATCH -J NAME
+#
+# Number of nodes and MPI tasks per node:
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=40
+#
+#SBATCH --mail-type=all
+#SBATCH --mail-user=bseidl@mpa-garching.mpg.de
+
+#SBATCH -p p.24h
+#SBATCH --time=23:59:00
+# Load compiler and MPI modules with explicit version specifications,
+# consistently with the versions used to build the executable.
+module purge
+module load gcc/11 openmpi/4
+module list
+
+# Run the program:
+
+cd /u/bseidl/thesis/Python_Utils/Parallel_Imageswdwdwd
+srun ./athena -i ../../Simulation_Runs/23-05-05_ReplicaRun_Destruction/athinput.replicaRun_Destruction -t 23:59:00 -d ../../Simulation_Runs/23-05-05_ReplicaRun_Destruction/data_run/highres

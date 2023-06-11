@@ -1,0 +1,31 @@
+#!/bin/bash 
+# Standard output and error:
+mkdir ./ImLog
+#SBATCH -o ./ImLog/tjob.out.%j
+#SBATCH -e ./ImLog/tjob.err.%j
+# Initial working directory:
+# Job Name:
+#SBATCH -J visuals_parallel
+#
+# Number of nodes and MPI tasks per node:
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=40
+#
+#SBATCH --mail-type=all
+#SBATCH --mail-user=bseidl@mpa-garching.mpg.de
+
+#SBATCH -p p.24h
+#SBATCH --time=23:50:00
+# Load compiler and MPI modules with explicit version specifications,
+# consistently with the versions used to build the executable.
+module purge
+module load gcc/11
+module load anaconda/3/2021.11
+module load openmpi/4
+module load mpi4py/
+module list
+
+# Run the program:
+
+cd ~/thesis/Python_Utils/Parallel_Images
+python parallel_images.py
