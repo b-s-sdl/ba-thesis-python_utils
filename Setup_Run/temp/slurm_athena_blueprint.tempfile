@@ -1,0 +1,27 @@
+#!/bin/bash 
+# Standard output and error:
+#SBATCH -o ../Log/tjob.out.%j
+#SBATCH -e ../Log/tjob.err.%j
+# Initial working directory:
+# Job Name:
+#SBATCH -J multiCloud_Series2-6_1dist
+#
+# Number of nodes and MPI tasks per node:
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=40
+#
+#SBATCH --mail-type=all
+#SBATCH --mail-user=bseidl@mpa-garching.mpg.de
+
+#SBATCH -p p.24h
+#SBATCH --time=12:00:00
+# Load compiler and MPI modules with explicit version specifications,
+# consistently with the versions used to build the executable.
+module purge
+module load gcc/11 openmpi/4
+module list
+
+# Run the program:
+
+cd /ptmp/mpa/bseidl/Simulation-Runs/2023-06-11_multiCloud_Series2-6_1dist/bin
+srun ./athena -i ../inputs/athinput.multiCloud_Series2-6_1dist -t 11:55:00 -d ../data

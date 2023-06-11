@@ -1,0 +1,53 @@
+#!/bin/bash 
+# Standard output and error:
+#SBATCH -o ../ImLog/tjob.out.%j
+#SBATCH -e ../ImLog/tjob.err.%j
+# Initial working directory:
+# Job Name:
+#SBATCH -J img_surv1-1_5cl
+#
+# Number of nodes and MPI tasks per node:
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=40
+#
+#SBATCH --mail-type=all
+#SBATCH --mail-user=bseidl@mpa-garching.mpg.de
+
+#SBATCH -p p.24h
+#SBATCH --time=01:00:00
+# Load compiler and MPI modules with explicit version specifications,
+# consistently with the versions used to build the executable.
+module purge
+module load gcc/11 openmpi/4
+module list
+
+source ~/thesis/.venv/bin/activate
+
+# Run the program:
+
+cd /u/bseidl/thesis/Python_Utils/Parallel_Images/
+srun python parallel_images_multiSeries.py /ptmp/mpa/bseidl/Simulation-Runs/2023-06-10_multiCloud_Series2-4_1dist True
+
+module purge
+module load ffmpeg
+module list
+
+cd /ptmp/mpa/bseidl/Simulation-Runs/2023-06-10_multiCloud_Series2-4_1dist/Images_density/raw
+
+ffmpeg -framerate 10 -pattern_type glob -i '*.png' -c:v libx264 -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -f mp4 ../multiCloud_Series2-4_1dist_dens.mp4
+
+cd /ptmp/mpa/bseidl/Simulation-Runs/2023-06-10_multiCloud_Series2-4_1dist/Images_cloud_temperature/raw
+
+ffmpeg -framerate 10 -pattern_type glob -i '*.png' -c:v libx264 -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -f mp4 ../multiCloud_Series2-4_1dist_cloudTemp.mp4
+
+cd /ptmp/mpa/bseidl/Simulation-Runs/2023-06-10_multiCloud_Series2-4_1dist/Images_pressure/raw
+
+ffmpeg -framerate 10 -pattern_type glob -i '*.png' -c:v libx264 -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -f mp4 ../multiCloud_Series2-4_1dist_press.mp4
+
+cd /ptmp/mpa/bseidl/Simulation-Runs/2023-06-10_multiCloud_Series2-4_1dist/Images_specific_scalar[0]/raw
+
+ffmpeg -framerate 10 -pattern_type glob -i '*.png' -c:v libx264 -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -f mp4 ../multiCloud_Series2-4_1dist_scalar.mp4
+
+cd /ptmp/mpa/bseidl/Simulation-Runs/2023-06-10_multiCloud_Series2-4_1dist/Images_velocity_x/raw
+
+ffmpeg -framerate 10 -pattern_type glob -i '*.png' -c:v libx264 -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -f mp4 ../multiCloud_Series2-4_1dist_velo.mp4
