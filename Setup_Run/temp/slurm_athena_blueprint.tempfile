@@ -4,7 +4,7 @@
 #SBATCH -e ../Log/tjob.err.%j
 # Initial working directory:
 # Job Name:
-#SBATCH -J multiCloud_Series2-6_1dist
+#SBATCH -J testNewProblemGen
 #
 # Number of nodes and MPI tasks per node:
 #SBATCH --nodes=2
@@ -23,5 +23,5 @@ module list
 
 # Run the program:
 
-cd /ptmp/mpa/bseidl/Simulation-Runs/2023-06-11_multiCloud_Series2-6_1dist/bin
-srun ./athena -i ../inputs/athinput.multiCloud_Series2-6_1dist -t 11:55:00 -d ../data
+cd /ptmp/mpa/bseidl/Simulation-Runs/2023-06-26_testNewProblemGen/bin
+srun ./athena -i ../inputs/athinput.testNewProblemGen -t 11:55:00 -d ../data

@@ -62,7 +62,7 @@ T_cloud         = 1             # in units of 10^4 K
 M_wind          = 1.5           # Mach Number of hot wind
 T_ceil_cool     = 100           # switch off cooling above this T in units of 10^4 K
 scaling_fac     = 2.6e-3
-centerpos       = centerpos_multiCloud_Series2-6_1dist
+centerpos       = centerpos_testNewProblemGen
 
 #Deprecated
 #dp              = -0.6 # sets global pressure. P = Gamma - 1 + dp

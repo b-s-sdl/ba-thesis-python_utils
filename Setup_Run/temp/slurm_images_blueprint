@@ -4,17 +4,17 @@
 #SBATCH -e ../ImLog/tjob.err.%j
 # Initial working directory:
 # Job Name:
-#SBATCH -J img_multiCloud_Series2-6_1dist
+#SBATCH -J img_testNewProblemGen
 #
 # Number of nodes and MPI tasks per node:
-#SBATCH --nodes=2
+#SBATCH --nodes=1
 #SBATCH --ntasks-per-node=40
 #
 #SBATCH --mail-type=all
 #SBATCH --mail-user=bseidl@mpa-garching.mpg.de
 
 #SBATCH -p p.24h
-#SBATCH --time=00:10:00
+#SBATCH --time=01:00:00
 # Load compiler and MPI modules with explicit version specifications,
 # consistently with the versions used to build the executable.
 module purge
@@ -26,28 +26,34 @@ source ~/thesis/.venv/bin/activate
 # Run the program:
 
 cd /u/bseidl/thesis/Python_Utils/Parallel_Images/
-srun python parallel_images_highdpi_new.py /ptmp/mpa/bseidl/Simulation-Runs/2023-06-11_multiCloud_Series2-6_1dist density
+srun python parallel_images_multiSeries.py /ptmp/mpa/bseidl/Simulation-Runs/2023-06-26_testNewProblemGen False
 
 module purge
 module load ffmpeg
 module list
 
-cd /ptmp/mpa/bseidl/Simulation-Runs/2023-06-11_multiCloud_Series2-6_1dist/Images_density/raw
+cd /ptmp/mpa/bseidl/Simulation-Runs/2023-06-26_testNewProblemGen/Images_density/raw
 
-ffmpeg -framerate 10 -pattern_type glob -i '*.png' -c:v libx264 -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -f mp4 ../multiCloud_Series2-6_1dist_dens.mp4
+ffmpeg -framerate 10 -pattern_type glob -i '*.png' -c:v libx264 -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -f mp4 ../testNewProblemGen_dens.mp4
 
-cd /ptmp/mpa/bseidl/Simulation-Runs/2023-06-11_multiCloud_Series2-6_1dist/Images_cloud_temperature/raw
+cd /ptmp/mpa/bseidl/Simulation-Runs/2023-06-26_testNewProblemGen/Images_cloud_temp/raw
 
-ffmpeg -framerate 10 -pattern_type glob -i '*.png' -c:v libx264 -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -f mp4 ../multiCloud_Series2-6_1dist_temp.mp4
+ffmpeg -framerate 10 -pattern_type glob -i '*.png' -c:v libx264 -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -f mp4 ../testNewProblemGen_temp.mp4
 
-cd /ptmp/mpa/bseidl/Simulation-Runs/2023-06-11_multiCloud_Series2-6_1dist/Images_pressure/raw
+cd /ptmp/mpa/bseidl/Simulation-Runs/2023-06-26_testNewProblemGen/Images_pressure/raw
 
-ffmpeg -framerate 10 -pattern_type glob -i '*.png' -c:v libx264 -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -f mp4 ../multiCloud_Series2-6_1dist_press.mp4
+ffmpeg -framerate 10 -pattern_type glob -i '*.png' -c:v libx264 -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -f mp4 ../testNewProblemGen_press.mp4
 
-cd /ptmp/mpa/bseidl/Simulation-Runs/2023-06-11_multiCloud_Series2-6_1dist/Images_specific_scalar[0]/raw
+cd /ptmp/mpa/bseidl/Simulation-Runs/2023-06-26_testNewProblemGen/Images_specific_scalar[0]/raw
 
-ffmpeg -framerate 10 -pattern_type glob -i '*.png' -c:v libx264 -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -f mp4 ../multiCloud_Series2-6_1dist_scalar.mp4
+ffmpeg -framerate 10 -pattern_type glob -i '*.png' -c:v libx264 -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -f mp4 ../testNewProblemGen_scalar.mp4
 
-cd /ptmp/mpa/bseidl/Simulation-Runs/2023-06-11_multiCloud_Series2-6_1dist/Images_velocity_x/raw
+cd /ptmp/mpa/bseidl/Simulation-Runs/2023-06-26_testNewProblemGen/Images_velocity_x/raw
 
-ffmpeg -framerate 10 -pattern_type glob -i '*.png' -c:v libx264 -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -f mp4 ../multiCloud_Series2-6_1dist_velo.mp4
+ffmpeg -framerate 10 -pattern_type glob -i '*.png' -c:v libx264 -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -f mp4 ../testNewProblemGen_velo.mp4
+
+cd /ptmp/mpa/bseidl/Simulation-Runs/2023-06-26_testNewProblemGen/Images_density_projection/raw
+ffmpeg -framerate 10 -pattern_type glob -i '*.png' -c:v libx264 -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -f mp4 ../testNewProblemGen_dens_projection.mp4
+
+cd /ptmp/mpa/bseidl/Simulation-Runs/2023-06-26_testNewProblemGen/Images_cloud_temp_projection/raw
+ffmpeg -framerate 10 -pattern_type glob -i '*.png' -c:v libx264 -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -f mp4 ../testNewProblemGen_temp_projetion.mp4
